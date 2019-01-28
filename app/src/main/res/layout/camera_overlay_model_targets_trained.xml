@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/camera_overlay_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar"
+        android:id="@+id/loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <RelativeLayout
+        android:id="@+id/main_ar_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/searching_reticle_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/searching_reticle"
+            android:contentDescription="@string/descr_reticle_searching"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="9dp"
+            android:layout_marginEnd="9dp">
+
+            <ImageView
+                android:id="@+id/lander_status_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lander_status_passive"
+                android:contentDescription="@string/lander_tracking_status"
+                android:layout_marginBottom="23dp"
+                />
+
+            <ImageView
+                android:id="@+id/bike_status_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bike_status_passive"
+                android:contentDescription="@string/bike_tracking_status"
+                />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/reset_btn"
+            android:src="@drawable/selector_btn_reset"
+            android:background="@color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:contentDescription="@string/descr_btn_reset"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/initial_screen_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/semi_transparent_black"
+        android:visibility="invisible"
+        >
+
+        <TextView
+            android:id="@+id/initial_screen_and_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:text="@string/and"
+            />
+
+        <ImageView
+            android:id="@+id/initial_screen_lander_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/initial_screen_and_text"
+            android:layout_toLeftOf="@id/initial_screen_and_text"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/lander_reticle"
+            android:contentDescription="@string/descr_model_lander"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/initial_screen_lander_image"
+            android:layout_marginBottom="8dp"
+            android:layout_alignStart="@id/initial_screen_lander_image"
+            android:layout_alignEnd="@id/initial_screen_lander_image"
+            android:layout_alignLeft="@id/initial_screen_lander_image"
+            android:layout_alignRight="@id/initial_screen_lander_image"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:text="@string/detect_lander"
+            />
+
+        <ImageView
+            android:id="@+id/initial_screen_bike_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/initial_screen_and_text"
+            android:layout_toRightOf="@id/initial_screen_and_text"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/bike_reticle"
+            android:contentDescription="@string/descr_model_bike"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/initial_screen_bike_image"
+            android:layout_marginBottom="8dp"
+            android:layout_alignStart="@id/initial_screen_bike_image"
+            android:layout_alignEnd="@id/initial_screen_bike_image"
+            android:layout_alignLeft="@id/initial_screen_bike_image"
+            android:layout_alignRight="@id/initial_screen_bike_image"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:text="@string/detect_bike"
+            />
+
+        <Button
+            android:id="@+id/initial_screen_get_started_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/initial_screen_bike_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/button_background"
+            android:text="@string/get_started"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/all_models_detected_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:background="@color/semi_transparent_black"
+        android:gravity="center_horizontal"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="17dp"
+            android:contentDescription="@string/descr_checkmark"
+            android:src="@drawable/checkmark" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:text="@string/detected_all_the_models"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/all_models_detected_continue_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/button_background"
+            android:text="@string/button_continue"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <include layout="@layout/sample_app_title_bar"/>
+
+</RelativeLayout>
