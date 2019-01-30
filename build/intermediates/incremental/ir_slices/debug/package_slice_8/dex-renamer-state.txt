@@ -1,4 +1,0 @@
-#Tue Jan 29 00:52:30 CET 2019
-base.0=D\:\\Repository\\Szymczyk\\Shirts\\build\\intermediates\\transforms\\dexMerger\\debug\\8
-renamed.0=classes.dex
-path.0=classes.dex
