@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,7 +13,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startActivity(new Intent(getApplicationContext(), TshirtTypeChooser.class));
-        finish();
+        ConstraintLayout tryit = findViewById(R.id.tryit);
+        ConstraintLayout compose = findViewById(R.id.compose);
+
+        tryit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        compose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), TshirtTypeChooserActivity.class));
+            }
+        });
     }
 }
