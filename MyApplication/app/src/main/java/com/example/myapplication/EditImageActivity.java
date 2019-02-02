@@ -222,8 +222,15 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
         if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             showLoading("Saving...");
             final File file = new File(Environment.getExternalStorageDirectory()
-                    + File.separator + ""
-                    + System.currentTimeMillis() + "2.png");
+                    + File.separator + "fittingroom" + File.separator
+                    + System.currentTimeMillis() + ".png");
+
+            File folder = new File(Environment.getExternalStorageDirectory()
+                    + File.separator + "fittingroom");
+            if (!folder.exists()) {
+                //Toast.makeText(MainActivity.this, "Directory Does Not Exist, Create It", Toast.LENGTH_SHORT).show();
+                folder.mkdir();
+            }
             try {
                 file.createNewFile();
 
