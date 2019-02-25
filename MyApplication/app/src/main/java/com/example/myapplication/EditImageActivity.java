@@ -83,11 +83,36 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
 
         type = getIntent().getStringExtra("type");
         String color = getIntent().getStringExtra("color");
-
+        ImageView shadow = findViewById(R.id.t_shadow);
         if(type.equals("1")){
             switch (color){
                 case "white":
                     mPhotoEditorView.getSource().setImageResource(R.drawable.tshirt1_white);
+                    shadow.setImageResource(R.drawable.tshirt1_transparent);
+                    break;
+            }
+        }else
+        if(type.equals("2")){
+            switch (color){
+                case "white":
+                    mPhotoEditorView.getSource().setImageResource(R.drawable.tshirt2_white);
+                    shadow.setImageResource(R.drawable.tshirt2_transparent);
+                    break;
+            }
+        }else
+        if(type.equals("3")){
+            switch (color){
+                case "white":
+                    mPhotoEditorView.getSource().setImageResource(R.drawable.tshirt3_white);
+                    shadow.setImageResource(R.drawable.tshirt3_transparent);
+                    break;
+            }
+        }else
+        if(type.equals("4")){
+            switch (color){
+                case "white":
+                    mPhotoEditorView.getSource().setImageResource(R.drawable.tshirt4_white);
+                    shadow.setImageResource(R.drawable.tshirt4_transparent);
                     break;
             }
         }
@@ -252,7 +277,21 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
                         paint.setColor(0XFF000000);
 
-                        Bitmap bmap = BitmapFactory.decodeResource(getResources(), R.drawable.tshirt1_black);
+                        Bitmap bmap = null;
+
+                        if(type.equals("1")){
+                            bmap = BitmapFactory.decodeResource(getResources(), R.drawable.tshirt1_white);
+                        }else
+                        if(type.equals("2")){
+                            bmap = BitmapFactory.decodeResource(getResources(), R.drawable.tshirt2_white);
+                        }else
+                        if(type.equals("3")){
+                            bmap = BitmapFactory.decodeResource(getResources(), R.drawable.tshirt3_white);
+
+                        }else
+                        if(type.equals("4")){
+                            bmap = BitmapFactory.decodeResource(getResources(), R.drawable.tshirt4_white);
+                        }
 
                         Double percentage = 0.0;
                         Bitmap resized = null;
@@ -270,9 +309,6 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                         }
 
 
-                        if(type.equals("1")){
-
-                        }
 
                         canvas.drawBitmap(resized, 0, newTop.intValue(), paint);
 

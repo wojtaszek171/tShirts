@@ -29,7 +29,29 @@ public class EditorActivity extends AppCompatActivity {
                     mPhotoEditorView.getSource().setImageResource(R.drawable.tshirt1_white);
                     break;
             }
+        }else
+        if(type.equals("2")){
+            switch (color){
+                case "white":
+                    mPhotoEditorView.getSource().setImageResource(R.drawable.tshirt2_white);
+                    break;
+            }
+        }else
+        if(type.equals("3")){
+            switch (color){
+                case "white":
+                    mPhotoEditorView.getSource().setImageResource(R.drawable.tshirt3_white);
+                    break;
+            }
+        }else
+        if(type.equals("4")){
+            switch (color){
+                case "white":
+                    mPhotoEditorView.getSource().setImageResource(R.drawable.tshirt4_white);
+                    break;
+            }
         }
+
 
         //Use custom font using latest support library
         //Typeface mTextRobotoTf = ResourcesCompat.getFont(this, R.font.roboto_medium);
