@@ -327,10 +327,9 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                             e.printStackTrace();
                         }
 
-                        mPhotoEditorView.getSource().setImageBitmap(output);
-
                         output.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-
+                        startActivity(new Intent(getApplicationContext(), TshirtsGalleryActivity.class));
+                        finish();
                         hideLoading();
                     }
 
