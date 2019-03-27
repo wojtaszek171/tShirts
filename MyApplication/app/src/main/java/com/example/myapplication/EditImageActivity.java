@@ -456,6 +456,9 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
             case STICKER:
                 mStickerBSFragment.show(getSupportFragmentManager(), mStickerBSFragment.getTag());
                 break;
+            case COLOR:
+                Toast.makeText(this, "COLOR", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
