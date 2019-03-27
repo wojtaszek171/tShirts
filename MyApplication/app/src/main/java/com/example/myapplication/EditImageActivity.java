@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -37,6 +38,8 @@ import android.widget.Toast;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.tools.EditingToolsAdapter;
 import com.example.myapplication.tools.ToolType;
+import com.kizitonwose.colorpreference.ColorDialog;
+import com.kizitonwose.colorpreference.ColorShape;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,7 +58,7 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
         View.OnClickListener,
         PropertiesBSFragment.Properties,
         EmojiBSFragment.EmojiListener,
-        StickerBSFragment.StickerListener, EditingToolsAdapter.OnItemSelected {
+        StickerBSFragment.StickerListener, EditingToolsAdapter.OnItemSelected, ColorDialog.OnColorSelectedListener{
 
     private static final String TAG = EditImageActivity.class.getSimpleName();
     public static final String EXTRA_IMAGE_PATHS = "extra_image_paths";
@@ -457,9 +460,18 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                 mStickerBSFragment.show(getSupportFragmentManager(), mStickerBSFragment.getTag());
                 break;
             case COLOR:
-                Toast.makeText(this, "COLOR", Toast.LENGTH_SHORT).show();
+                showColorPicker();
                 break;
         }
+    }
+
+    private void showColorPicker() {
+        new ColorDialog.Builder(this)
+                .setColorShape(ColorShape.CIRCLE) //CIRCLE or SQUARE
+                .setColorChoices(R.array.color_choices) //an array of colors
+                .setSelectedColor(Color.GREEN) //the checked color
+                .setTag("TAG") // tags can be useful when multiple components use the picker within an activity
+                .show();
     }
 
 
@@ -473,4 +485,25 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
         }
     }
 
+    @Override
+    public void onColorSelected(int newColor, String tag) {
+        Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.tshirt1_white);
+
+        if(type.equals("1")){
+            drawable = getApplicationContext().getResources().getDrawable(R.drawable.tshirt1_white);
+        }else
+        if(type.equals("2")){
+            drawable = getApplicationContext().getResources().getDrawable(R.drawable.tshirt2_white);
+        }else
+        if(type.equals("3")){
+            drawable = getApplicationContext().getResources().getDrawable(R.drawable.tshirt3_white);
+        }else
+        if(type.equals("4")){
+            drawable = getApplicationContext().getResources().getDrawable(R.drawable.tshirt4_white);
+        }
+
+        drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_IN);
+
+        mPhotoEditorView.getSource().setImageDrawable(drawable.mutate());
+    }
 }
