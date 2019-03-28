@@ -354,10 +354,9 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
             switch (requestCode) {
                 case PICK_REQUEST:
                     try {
-                        mPhotoEditor.clearAllViews();
                         Uri uri = data.getData();
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        mPhotoEditorView.getSource().setImageBitmap(bitmap);
+                        mPhotoEditor.addImage(bitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
