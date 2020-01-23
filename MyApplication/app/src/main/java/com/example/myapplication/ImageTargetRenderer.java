@@ -13,6 +13,7 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import com.example.myapplication.SampleApplication.utils.Plane;
 import com.vuforia.DeviceTrackableResult;
 import com.vuforia.ImageTargetResult;
 import com.vuforia.Matrix44F;
@@ -58,7 +59,7 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
     private int texSampler2DHandle;
 
     // Object to be rendered
-    private Teapot mTeapot;
+    private Plane mTeapot;
     
     private static final float BUILDING_SCALE = 0.012f;
     private SampleApplication3DModel mBuildingsModel;
@@ -143,10 +144,8 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
                 int textureIndex;
                 modelMatrix = Tool.convertPose2GLMatrix(result.getPose());
 
-                textureIndex = trackable.getName().equalsIgnoreCase("stones") ? 0
+                textureIndex = trackable.getName().equalsIgnoreCase("tshirt") ? 0
                     : 1;
-                textureIndex = trackable.getName().equalsIgnoreCase("tarmac") ? 2
-                    : textureIndex;
 
                 textureIndex = mActivityRef.get().isDeviceTrackingActive() ? 3 : textureIndex;
 
@@ -198,7 +197,7 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
 
         if(!mModelIsLoaded)
         {
-            mTeapot = new Teapot();
+            mTeapot = new Plane();
 
             try {
                 mBuildingsModel = new SampleApplication3DModel();

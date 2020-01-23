@@ -48,18 +48,15 @@ public class SampleAppMenuGroup
     private final float mEntriesTextSize;
     private final int mEntriesSidesPadding;
     private final int mEntriesUpDownPadding;
-    private final int mEntriesUpDownRadioPadding;
     private final Typeface mFont;
 
     private final int selectorResource;
 
     private final SampleAppMenu mSampleAppMenu;
-    private RadioGroup mRadioGroup;
 
     private final OnClickListener mClickListener;
     private final OnCheckedChangeListener mOnCheckedListener;
-    private final OnCheckedChangeListener mOnRadioCheckedListener;
-    
+
     
     @SuppressLint("InflateParams")
     public SampleAppMenuGroup(SampleAppMenuInterface menuInterface,
@@ -86,8 +83,6 @@ public class SampleAppMenuGroup
             R.dimen.menu_entries_sides_padding);
         mEntriesUpDownPadding = (int) mActivityRef.get().getResources().getDimension(
             R.dimen.menu_entries_top_down_padding);
-        mEntriesUpDownRadioPadding = (int) mActivityRef.get().getResources()
-            .getDimension(R.dimen.menu_entries_top_down_radio_padding);
         dividerResource = R.layout.sample_app_menu_group_divider;
         
         selectorResource = android.R.drawable.list_selector_background;
@@ -135,26 +130,6 @@ public class SampleAppMenuGroup
                     switchView.setChecked(!isChecked);
                 } else
                     mSampleAppMenu.hideMenu();
-            }
-        };
-        
-        mOnRadioCheckedListener = new OnCheckedChangeListener()
-        {
-            
-            @Override
-            public void onCheckedChanged(CompoundButton switchView,
-                boolean isChecked)
-            {
-                if(isChecked)
-                {
-                    boolean result;
-                    int command = Integer.parseInt(switchView.getTag().toString());
-                    result = mMenuInterfaceRef.get().menuProcess(command);
-                    if (result)
-                    {
-                        mSampleAppMenu.hideMenu();
-                    }
-                }
             }
         };
     }
@@ -248,55 +223,7 @@ public class SampleAppMenuGroup
         
         return returnView;
     }
-    
-    
-    @SuppressLint("InflateParams")
-    @SuppressWarnings({"deprecation", "UnusedReturnValue"})
-    public View addRadioItem(String text, int command, boolean isSelected)
-    {
-        if (mRadioGroup == null)
-        {
-            mRadioGroup = new RadioGroup(mActivityRef.get());
-            mRadioGroup.setVisibility(View.VISIBLE);
-            mLayout.addView(mRadioGroup, mLayoutParams);
-        }
-        
-        Drawable selectorDrawable = mActivityRef.get().getResources().getDrawable(
-            selectorResource);
-        
-        RadioButton newRadioButton = (RadioButton) inflater.inflate(
-            R.layout.sample_app_menu_group_radio_button, null, false);
-        newRadioButton.setText(text);
-        
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-            newRadioButton.setBackground(selectorDrawable);
-        else
-            newRadioButton.setBackgroundDrawable(selectorDrawable);
-        
-        newRadioButton.setTypeface(mFont);
-        newRadioButton.setTextSize(mEntriesTextSize);
-        newRadioButton.setPadding(mEntriesSidesPadding,
-            mEntriesUpDownRadioPadding, mEntriesSidesPadding,
-            mEntriesUpDownRadioPadding);
-        newRadioButton.setCompoundDrawablePadding(0);
-        newRadioButton.setTag(command);
-        newRadioButton.setVisibility(View.VISIBLE);
-        mRadioGroup.addView(newRadioButton, mLayoutParams);
-        
-        View divider = inflater.inflate(dividerResource, null);
-        mRadioGroup.addView(divider, mLayoutParams);
-        
-        if (isSelected)
-        {
-            mRadioGroup.check(newRadioButton.getId());
-        }
 
-        // Set the listener after changing the UI state to avoid calling the radio button functionality when creating the menu 
-        newRadioButton.setOnCheckedChangeListener(mOnRadioCheckedListener);
-
-        return newRadioButton;
-    }
-    
     
     LinearLayout getMenuLayout()
     {

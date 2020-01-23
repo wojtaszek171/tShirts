@@ -12,8 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.myapplication.CoreSamples.app.ImageTargets.ImageTargets;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -54,7 +52,6 @@ public class TshirtsCustomsAdapter extends BaseAdapter {
                     context.startActivity(new Intent(context.getApplicationContext(), ImageTargets.class));
                 }
             });
-            final View finalView = view;
             final int finali = i;
             tshirtImage.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

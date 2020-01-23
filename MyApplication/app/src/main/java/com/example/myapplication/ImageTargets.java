@@ -135,11 +135,9 @@ public class ImageTargets extends SampleActivityBase implements SampleApplicatio
         vuforiaAppSession = new SampleApplicationSession(this);
 
         startLoadingAnimation();
-        mDatasetStrings.add("StonesAndChips.xml");
-        mDatasetStrings.add("Tarmac.xml");
+        mDatasetStrings.add("target_images.xml");
 
-        mRuntimeImageSources.add("stones.jpg");
-        mRuntimeImageSources.add("chips.jpg");
+        mRuntimeImageSources.add("tshirt.jpg");
 
         vuforiaAppSession
             .initAR(this, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -255,12 +253,6 @@ public class ImageTargets extends SampleActivityBase implements SampleApplicatio
     private void loadTextures()
     {
         mTextures.add(Texture.loadTextureFromApk("TextureTeapotBrass.png",
-            getAssets()));
-        mTextures.add(Texture.loadTextureFromApk("TextureTeapotBlue.png",
-            getAssets()));
-        mTextures.add(Texture.loadTextureFromApk("TextureTeapotRed.png",
-            getAssets()));
-        mTextures.add(Texture.loadTextureFromApk("ImageTargets/Buildings.png",
             getAssets()));
     }
 
@@ -875,9 +867,6 @@ public class ImageTargets extends SampleActivityBase implements SampleApplicatio
             getString(R.string.menu_flash), CMD_FLASH, false);
 
         mDatasetsNumber = mDatasetStrings.size();
-
-        group.addRadioItem("Stones & Chips", mStartDatasetsIndex, true);
-        group.addRadioItem("Tarmac", mStartDatasetsIndex + 1, false);
 
         mSampleAppMenu.attachMenu();
     }
