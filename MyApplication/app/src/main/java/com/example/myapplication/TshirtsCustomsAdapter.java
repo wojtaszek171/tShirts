@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.example.myapplication.CoreSamples.app.ImageTargets.ImageTargets;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,8 +50,8 @@ public class TshirtsCustomsAdapter extends BaseAdapter {
             tshirtImage.setImageURI(Uri.parse(getItem(i)));
             tshirtImage.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-
+                public void onClick(View view2) {
+                    context.startActivity(new Intent(context.getApplicationContext(), ImageTargets.class));
                 }
             });
             final View finalView = view;

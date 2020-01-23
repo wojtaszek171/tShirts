@@ -1,7 +1,15 @@
 apply plugin: 'com.android.application'
 
+def VUFORIA_SDK_DIR = '../../../../'
+
 android {
     compileSdkVersion 27
+
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir "$VUFORIA_SDK_DIR/build/lib/"
+    }
+
     defaultConfig {
         applicationId "com.example.myapplication"
         minSdkVersion 21
@@ -9,6 +17,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            // Default ABI list for this app, can be over-ridden by providing an abiList property
+            // e.g. gradle -PabiList=x86 clean assembleDebug
+            abiFilters ((project.findProperty('abiList') ?: 'armeabi-v7a, arm64-v8a, x86').split(/,\s*/))
+        }
     }
     buildTypes {
         release {
@@ -32,4 +46,6 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation project(path: ':photoeditor')
+    implementation files("$VUFORIA_SDK_DIR/build/java/Vuforia/Vuforia.jar")
+    implementation 'com.google.ar:core:1.10.0'
 }
