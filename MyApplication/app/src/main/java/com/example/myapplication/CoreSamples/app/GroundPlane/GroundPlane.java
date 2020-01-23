@@ -125,10 +125,7 @@ public class GroundPlane extends SampleActivityBase implements SampleApplication
 
         mGroundPlaneLayout = mUILayout.findViewById(R.id.ground_plane_layout);
         mInstructionsView = mUILayout.findViewById(R.id.instructions_view);
-        btnAstro = mUILayout.findViewById(R.id.btn_astro);
-        btnDrone = mUILayout.findViewById(R.id.btn_drone);
-        btnFurniture = mUILayout.findViewById(R.id.btn_furniture);
-        ImageButton btnReset = mUILayout.findViewById(R.id.btn_reset);
+
         topbarTitle = mUILayout.findViewById(R.id.topbar_title);
         instructionText = mUILayout.findViewById(R.id.instruction_text);
         modeIndicator = mUILayout.findViewById(R.id.mode_indicator);
@@ -183,57 +180,6 @@ public class GroundPlane extends SampleActivityBase implements SampleApplication
         // Load any sample specific textures:
         mTextures = new Vector<>();
         loadTextures();
-
-        btnAstro.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                boolean isActivated = btnAstro.isActivated();
-                if (!isActivated)
-                {
-                    mRenderer.setMode(GroundPlaneRenderer.SAMPLE_APP_INTERACTIVE_MODE);
-                }
-            }
-        });
-
-        btnDrone.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                boolean isActivated = btnDrone.isActivated();
-                if (!isActivated)
-                {
-                    mRenderer.setMode(GroundPlaneRenderer.SAMPLE_APP_MIDAIR_MODE);
-                }
-            }
-        });
-
-        btnFurniture.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                boolean isActivated = btnFurniture.isActivated();
-                if (!isActivated)
-                {
-                    mRenderer.setMode(GroundPlaneRenderer.SAMPLE_APP_FURNITURE_MODE);
-                }
-            }
-        });
-
-        btnReset.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                if (mRenderer != null)
-                {
-                    mRenderer.resetGroundPlane(true);
-                }
-            }
-        });
     }
 
 

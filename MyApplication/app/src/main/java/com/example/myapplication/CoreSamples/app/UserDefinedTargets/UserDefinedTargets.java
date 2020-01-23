@@ -947,10 +947,6 @@ public class UserDefinedTargets extends SampleActivityBase implements
         group = mSampleAppMenu.addGroup("", false);
         group.addTextItem(getString(R.string.menu_back), -1);
         
-        group = mSampleAppMenu.addGroup("", true);
-        group.addSelectionItem(getString(R.string.menu_device_tracker),
-                CMD_DEVICE_TRACKER, false);
-        
         mSampleAppMenu.attachMenu();
     }
 

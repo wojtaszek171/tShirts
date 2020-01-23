@@ -947,7 +947,6 @@ public class CloudReco extends SampleActivityBase implements SampleApplicationCo
 
     // Menu options
     private final static int CMD_BACK = -1;
-    private final static int CMD_DEVICE_TRACKER = 1;
 
     private void setSampleAppMenuSettings()
     {
@@ -955,10 +954,6 @@ public class CloudReco extends SampleActivityBase implements SampleApplicationCo
         
         group = mSampleAppMenu.addGroup("", false);
         group.addTextItem(getString(R.string.menu_back), -1);
-        
-        group = mSampleAppMenu.addGroup("", true);
-        group.addSelectionItem(getString(R.string.menu_device_tracker),
-                CMD_DEVICE_TRACKER, false);
         
         mSampleAppMenu.attachMenu();
     }
@@ -975,49 +970,6 @@ public class CloudReco extends SampleActivityBase implements SampleApplicationCo
         {
             case CMD_BACK:
                 finish();
-                break;
-            
-            case CMD_DEVICE_TRACKER:
-
-                TrackerManager trackerManager = TrackerManager.getInstance();
-                PositionalDeviceTracker deviceTracker = (PositionalDeviceTracker)
-                        trackerManager.getTracker(PositionalDeviceTracker.getClassType());
-
-                if (deviceTracker != null)
-                {
-                    if (!mDeviceTracker)
-                    {
-                        if (!deviceTracker.start())
-                        {
-                            Log.e(LOGTAG,"Failed to start device tracker");
-                            result = false;
-                        }
-                        else
-                        {
-                            Log.d(LOGTAG,"Successfully started device tracker");
-                        }
-                    }
-                    else
-                    {
-                        deviceTracker.stop();
-                        clearSampleAppMessage();
-                    }
-                }
-                else
-                {
-                    Log.e(LOGTAG, "Device tracker is null!");
-                    result = false;
-                }
-
-                if (result)
-                {
-                    mDeviceTracker = !mDeviceTracker;
-                }
-                else
-                {
-                    clearSampleAppMessage();
-                }
-                
                 break;
         }
         

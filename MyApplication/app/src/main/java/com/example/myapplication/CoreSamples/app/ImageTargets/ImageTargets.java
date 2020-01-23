@@ -639,7 +639,7 @@ public class ImageTargets extends SampleActivityBase implements SampleApplicatio
 
             mUILayout.setBackgroundColor(Color.TRANSPARENT);
 
-            mSampleAppMenu = new SampleAppMenu(this, this, "Image Targets",
+            mSampleAppMenu = new SampleAppMenu(this, this, "Przymierzalnia",
                     mGlView, mUILayout, mSettingsAdditionalViews);
             setSampleAppMenuSettings();
 
@@ -871,9 +871,6 @@ public class ImageTargets extends SampleActivityBase implements SampleApplicatio
         group = mSampleAppMenu.addGroup("", false);
         group.addTextItem(getString(R.string.menu_back), -1);
 
-        group = mSampleAppMenu.addGroup("", true);
-        group.addSelectionItem(getString(R.string.menu_device_tracker),
-                CMD_DEVICE_TRACKING, false);
 
         group = mSampleAppMenu.addGroup(getString(R.string.menu_camera), true);
         mFocusOptionView = group.addSelectionItem(getString(R.string.menu_contAutofocus),
@@ -881,14 +878,6 @@ public class ImageTargets extends SampleActivityBase implements SampleApplicatio
         mFlashOptionView = group.addSelectionItem(
             getString(R.string.menu_flash), CMD_FLASH, false);
 
-        group = mSampleAppMenu
-            .addGroup(getString(R.string.menu_datasets), true);
-        mStartDatasetsIndex = CMD_DATASET_START_INDEX;
-        mDatasetsNumber = mDatasetStrings.size();
-        
-        group.addRadioItem("Stones & Chips", mStartDatasetsIndex, true);
-        group.addRadioItem("Tarmac", mStartDatasetsIndex + 1, false);
-        
         mSampleAppMenu.attachMenu();
     }
 

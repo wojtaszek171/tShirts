@@ -78,18 +78,15 @@
     <string name="target_quality_error_title">Low Quality Image</string>
     <string name="target_quality_error_desc">The image has very little detail, please try another.</string>
 
-    <string name="menu_back">Vuforia Engine Samples</string>
-    <string name="menu_device_tracker">Device Tracker</string>
-    <string name="menu_flash">Flash</string>
+    <string name="menu_back">Powrót do galerii</string>
+    <string name="menu_flash">Lampa błyskowa</string>
     <string name="menu_flash_error_on">Unable to turn on flash</string>
     <string name="menu_flash_error_off">Unable to turn off flash</string>
     <string name="menu_contAutofocus">Autofocus</string>
     <string name="menu_contAutofocus_error_on">Unable to activate Continuous Auto-Focus</string>
     <string name="menu_contAutofocus_error_off">Unable to deactivate Continuous Auto-Focus</string>
 
-    <string name="menu_datasets">DATASETS</string>
-    <string name="menu_versions">VERSIONS</string>
-    <string name="menu_camera">CAMERA</string>
+    <string name="menu_camera">APARAT</string>
     <string name="menu_virtual_buttons">VIRTUAL BUTTONS</string>
 
     <string name="menu_button_red">Red</string>
@@ -97,7 +94,5 @@
     <string name="menu_button_yellow">Yellow</string>
     <string name="menu_button_green">Green</string>
     <string name="menu_next_guide_view">Next Guide View</string>
-
-    <string name="splash_screen_description">Vuforia Engine Splash</string>
 
 </resources>

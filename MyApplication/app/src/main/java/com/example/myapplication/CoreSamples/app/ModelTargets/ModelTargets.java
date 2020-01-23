@@ -780,14 +780,6 @@ public class ModelTargets extends SampleActivityBase implements SampleApplicatio
 
         group.addTextItem(getString(R.string.menu_next_guide_view), CMD_NEXT_GUIDEVIEW);
 
-        group = mSampleAppMenu
-                .addGroup(getString(R.string.menu_datasets), true);
-        mStartDatasetsIndex = CMD_DATASET_START_INDEX;
-
-        group.addRadioItem("Model Targets", mStartDatasetsIndex, true);
-        group.addRadioItem("MT Advanced", mStartDatasetsIndex + 1, false);
-        group.addRadioItem("MT Advanced 360", mStartDatasetsIndex + 2, false);
-
         mSampleAppMenu.attachMenu();
     }
 
