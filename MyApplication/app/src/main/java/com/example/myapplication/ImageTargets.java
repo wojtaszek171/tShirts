@@ -17,9 +17,11 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -60,6 +62,9 @@ import com.example.myapplication.SampleApplication.utils.SampleAppTimer;
 import com.example.myapplication.SampleApplication.utils.SampleApplicationGLView;
 import com.example.myapplication.SampleApplication.utils.Texture;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
@@ -124,13 +129,15 @@ public class ImageTargets extends SampleActivityBase implements SampleApplicatio
     private AlertDialog mErrorDialog;
 
     private boolean mIsDroidDevice = false;
-
+    String shirtPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         Log.d(LOGTAG, "onCreate");
         super.onCreate(savedInstanceState);
+
+        shirtPath = getIntent().getStringExtra("shirtPath");
 
         vuforiaAppSession = new SampleApplicationSession(this);
 
@@ -252,8 +259,17 @@ public class ImageTargets extends SampleActivityBase implements SampleApplicatio
     // Load specific textures from the APK, which we will later use for rendering.
     private void loadTextures()
     {
-        mTextures.add(Texture.loadTextureFromApk("TextureTeapotBrass.png",
-            getAssets()));
+        try {
+            Bitmap bitmap=null;
+            File f= new File(shirtPath);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+            mTextures.add(Texture.loadTextureFromBitmap(bitmap));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

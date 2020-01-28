@@ -15,9 +15,12 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.vuforia.Image;
@@ -44,15 +47,15 @@ public class Texture
         try
         {
             inputStream = assets.open(fileName, AssetManager.ACCESS_BUFFER);
-            
+
             BufferedInputStream bufferedStream = new BufferedInputStream(
                 inputStream);
             Bitmap bitMap = BitmapFactory.decodeStream(bufferedStream);
-            
+
             int[] data = new int[bitMap.getWidth() * bitMap.getHeight()];
             bitMap.getPixels(data, 0, bitMap.getWidth(), 0, 0,
                 bitMap.getWidth(), bitMap.getHeight());
-            
+
             return loadTextureFromIntBuffer(data, bitMap.getWidth(),
                 bitMap.getHeight());
         } catch (IOException e)
@@ -109,5 +112,15 @@ public class Texture
         texture.mData.rewind();
 
         return texture;
+    }
+
+    public static Texture loadTextureFromBitmap(Bitmap bitMap)
+    {
+        int[] data = new int[bitMap.getWidth() * bitMap.getHeight()];
+        bitMap.getPixels(data, 0, bitMap.getWidth(), 0, 0,
+                bitMap.getWidth(), bitMap.getHeight());
+
+        return loadTextureFromIntBuffer(data, bitMap.getWidth(),
+                bitMap.getHeight());
     }
 }

@@ -13,7 +13,19 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import com.example.myapplication.ImageTargets;
+import com.example.myapplication.SampleApplication.SampleAppRenderer;
+import com.example.myapplication.SampleApplication.SampleAppRendererControl;
+import com.example.myapplication.SampleApplication.SampleApplicationSession;
+import com.example.myapplication.SampleApplication.SampleRendererBase;
+import com.example.myapplication.SampleApplication.utils.CubeShaders;
+import com.example.myapplication.SampleApplication.utils.LoadingDialogHandler;
+import com.example.myapplication.SampleApplication.utils.MeshObject;
 import com.example.myapplication.SampleApplication.utils.Plane;
+import com.example.myapplication.SampleApplication.utils.SampleApplication3DModel;
+import com.example.myapplication.SampleApplication.utils.SampleMath;
+import com.example.myapplication.SampleApplication.utils.SampleUtils;
+import com.example.myapplication.SampleApplication.utils.Texture;
 import com.vuforia.DeviceTrackableResult;
 import com.vuforia.ImageTargetResult;
 import com.vuforia.Matrix44F;
@@ -23,17 +35,6 @@ import com.vuforia.Trackable;
 import com.vuforia.TrackableResult;
 import com.vuforia.TrackableResultList;
 import com.vuforia.Vuforia;
-import com.example.myapplication.SampleApplication.SampleAppRenderer;
-import com.example.myapplication.SampleApplication.SampleAppRendererControl;
-import com.example.myapplication.SampleApplication.SampleApplicationSession;
-import com.example.myapplication.SampleApplication.SampleRendererBase;
-import com.example.myapplication.SampleApplication.utils.CubeShaders;
-import com.example.myapplication.SampleApplication.utils.LoadingDialogHandler;
-import com.example.myapplication.SampleApplication.utils.MeshObject;
-import com.example.myapplication.SampleApplication.utils.SampleApplication3DModel;
-import com.example.myapplication.SampleApplication.utils.SampleMath;
-import com.example.myapplication.SampleApplication.utils.SampleUtils;
-import com.example.myapplication.SampleApplication.utils.Texture;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -45,7 +46,7 @@ import java.util.Vector;
  *
  * In the renderFrame() function you can render augmentations to display over the Target
  */
-public class ImageTargetRenderer extends SampleRendererBase implements SampleAppRendererControl
+public class ImageTargetRendererCopy extends SampleRendererBase implements SampleAppRendererControl
 {
     private static final String LOGTAG = "ImageTargetRenderer";
 
@@ -60,13 +61,15 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
     // Object to be rendered
     private Plane mPlane;
 
+    private static final float BUILDING_SCALE = 0.012f;
+    private SampleApplication3DModel mBuildingsModel;
+
     private boolean mModelIsLoaded = false;
     private boolean mIsTargetCurrentlyTracked = false;
 
-    private static final float OBJECT_SCALE = 0.6f;
     private static final float OBJECT_SCALE_FLOAT = 0.003f;
 
-    ImageTargetRenderer(ImageTargets activity, SampleApplicationSession session)
+    ImageTargetRendererCopy(ImageTargets activity, SampleApplicationSession session)
     {
         mActivityRef = new WeakReference<>(activity);
         vuforiaAppSession = session;
@@ -113,8 +116,17 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
         if (state.getDeviceTrackableResult() != null)
         {
             int statusInfo = state.getDeviceTrackableResult().getStatusInfo();
+            int trackerStatus = state.getDeviceTrackableResult().getStatus();
 
             mActivityRef.get().checkForRelocalization(statusInfo);
+
+            if (trackerStatus != TrackableResult.STATUS.NO_POSE)
+            {
+                modelMatrix = Tool.convertPose2GLMatrix(state.getDeviceTrackableResult().getPose());
+
+                // We transpose here because Matrix44FInverse returns a transposed matrix
+                devicePoseMatrix = SampleMath.Matrix44FTranspose(SampleMath.Matrix44FInverse(modelMatrix));
+            }
         }
 
         TrackableResultList trackableResultList = state.getTrackableResults();
@@ -134,6 +146,8 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
 
                 textureIndex = trackable.getName().equalsIgnoreCase("tshirt") ? 0
                     : 1;
+
+                textureIndex = mActivityRef.get().isDeviceTrackingActive() ? 3 : textureIndex;
 
                 renderModel(projectionMatrix, devicePoseMatrix.getData(), modelMatrix.getData(), textureIndex);
 
@@ -185,6 +199,17 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
         {
             mPlane = new Plane();
 
+            try {
+                mBuildingsModel = new SampleApplication3DModel();
+                mBuildingsModel.loadModel(mActivityRef.get().getResources().getAssets(),
+                        "ImageTargets/Buildings.txt");
+                mModelIsLoaded = true;
+            } catch (IOException e)
+            {
+                Log.e(LOGTAG, "Unable to load buildings");
+            }
+
+            // Hide the Loading Dialog
             mActivityRef.get().loadingDialogHandler
                     .sendEmptyMessage(LoadingDialogHandler.HIDE_LOADING_DIALOG);
         }
@@ -196,10 +221,22 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
         MeshObject model;
         float[] modelViewProjection = new float[16];
 
-        Matrix.translateM(modelMatrix, 0, 0, 0, OBJECT_SCALE_FLOAT);
-        Matrix.scaleM(modelMatrix, 0, OBJECT_SCALE, OBJECT_SCALE, OBJECT_SCALE);
+        // Apply local transformation to our model
+        if (mActivityRef.get().isDeviceTrackingActive())
+        {
+            Matrix.translateM(modelMatrix, 0, 0, -0.06f, 0);
+            Matrix.rotateM(modelMatrix, 0, 90.0f, 1.0f, 0, 0);
+            Matrix.scaleM(modelMatrix, 0, BUILDING_SCALE, BUILDING_SCALE, BUILDING_SCALE);
 
-        model = mPlane;
+            model = mBuildingsModel;
+        }
+        else
+        {
+            Matrix.translateM(modelMatrix, 0, 0, 0, OBJECT_SCALE_FLOAT);
+            Matrix.scaleM(modelMatrix, 0, OBJECT_SCALE_FLOAT, OBJECT_SCALE_FLOAT, OBJECT_SCALE_FLOAT);
+
+            model = mPlane;
+        }
 
         // Combine device pose (view matrix) with model matrix
         Matrix.multiplyMM(modelMatrix, 0, viewMatrix, 0, modelMatrix, 0);

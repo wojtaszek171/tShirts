@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 
 public class TshirtsCustomsAdapter extends BaseAdapter {
@@ -43,13 +44,19 @@ public class TshirtsCustomsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view == null){
+            final String pathToShirt = getItem(i);
             view = thisInflater.inflate(R.layout.grid_item, viewGroup, false);
             ImageButton tshirtImage = view.findViewById(R.id.tshirtImage);
-            tshirtImage.setImageURI(Uri.parse(getItem(i)));
+            tshirtImage.setImageURI(Uri.parse(pathToShirt));
+
+
             tshirtImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view2) {
-                    context.startActivity(new Intent(context.getApplicationContext(), ImageTargets.class));
+                    Intent intent = new Intent(context.getApplicationContext(), ImageTargets.class);
+                    intent.putExtra("shirtPath", pathToShirt);
+
+                    context.startActivity(intent);
                 }
             });
             final int finali = i;
